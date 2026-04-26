@@ -19,15 +19,21 @@ export let auth = null;
 export let db = null;
 export let analytics = null;
 
-try {
-  app = initializeApp(firebaseConfig);
-  auth = getAuth(app);
-  db = getFirestore(app);
-  isSupported().then(yes => {
-    if (yes) analytics = getAnalytics(app);
-  }).catch(() => {});
-} catch (error) {
-  console.warn("Firebase initialization failed. Mocking services for UI preview.", error);
-  // Mock 'db' minimally for the Quiz UI so it doesn't crash on collection() calls
+const isMock = firebaseConfig.apiKey === "HACKATHON_MOCK_API_KEY_PLACEHOLDER" || !firebaseConfig.apiKey;
+
+if (isMock) {
+  console.warn("Using mock Firebase config. Network initialization disabled.");
   db = {}; 
+} else {
+  try {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    isSupported().then(yes => {
+      if (yes) analytics = getAnalytics(app);
+    }).catch(() => {});
+  } catch (error) {
+    console.warn("Firebase initialization failed.", error);
+    db = {}; 
+  }
 }
