@@ -14,11 +14,20 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-MOCKMETRICS"
 };
 
-// Initialize Firebase securely
-export const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-
-// Analytics is only supported in browser environments
+export let app = null;
+export let auth = null;
+export let db = null;
 export let analytics = null;
-isSupported().then(yes => yes ? analytics = getAnalytics(app) : null);
+
+try {
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+  isSupported().then(yes => {
+    if (yes) analytics = getAnalytics(app);
+  }).catch(() => {});
+} catch (error) {
+  console.warn("Firebase initialization failed. Mocking services for UI preview.", error);
+  // Mock 'db' minimally for the Quiz UI so it doesn't crash on collection() calls
+  db = {}; 
+}
