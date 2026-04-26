@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Quiz from '../components/Quiz';
 
 const ElectionJourney = lazy(() => import('../components/ElectionJourney'));
 
@@ -43,6 +44,8 @@ export default function Home() {
           <p>Discover how votes are counted, the role of returning officers, and the declaration of election results.</p>
         </article>
       </section>
+
+      <Quiz />
     </div>
   );
 }

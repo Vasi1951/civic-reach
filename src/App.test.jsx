@@ -34,7 +34,7 @@ describe('CivicReach Application Tests', () => {
   });
 
   describe('Home Page', () => {
-    it('should display the core educational sections', () => {
+    it('should display the core educational sections', async () => {
       render(
         <MemoryRouter>
           <Home />
@@ -44,6 +44,7 @@ describe('CivicReach Application Tests', () => {
       expect(screen.getByRole('heading', { level: 2, name: /Registration/i })).toBeInTheDocument();
       expect(screen.getByRole('heading', { level: 2, name: /The Ballot/i })).toBeInTheDocument();
       expect(screen.getByRole('heading', { level: 2, name: /The Results/i })).toBeInTheDocument();
+      await screen.findByTestId('election-journey-mock');
     });
 
     it('should have no accessibility violations in Home Page', async () => {
@@ -59,6 +60,7 @@ describe('CivicReach Application Tests', () => {
           <Home />
         </MemoryRouter>
       );
+      await screen.findByTestId('election-journey-mock');
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
