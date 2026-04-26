@@ -34,7 +34,8 @@ app.use(helmet({
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'dist')));
 
-app.get('*', (req, res) => {
+// Provide index.html for React Router (Express 5 fallback mechanism)
+app.get(/^(.*)$/, (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
