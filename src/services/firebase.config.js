@@ -5,7 +5,7 @@ import { getAnalytics, isSupported } from "firebase/analytics";
 
 // Use Vite environment variables
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyMockKeyForHackathonPlaceholderXYZ",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "HACKATHON_MOCK_API_KEY_PLACEHOLDER",
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "civic-reach.firebaseapp.com",
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "civic-reach",
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "civic-reach.appspot.com",
