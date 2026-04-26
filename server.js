@@ -23,10 +23,10 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://www.googletagmanager.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'", "https://firebasestorage.googleapis.com", "https://*.firebaseio.com", "https://*.googleapis.com"],
+      connectSrc: ["'self'", "https://firebasestorage.googleapis.com", "https://*.firebaseio.com", "https://*.googleapis.com", "https://www.google-analytics.com"],
     },
   },
 }));
