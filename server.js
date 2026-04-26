@@ -29,8 +29,8 @@ app.use(limiter);
 // Serve static compiled UI
 app.use(express.static(join(__dirname, 'dist')));
 
-// Fallback logic for Client Side Routing (React Router)
-app.get('*', (req, res) => {
+// Fallback logic for Client Side Routing (Express 5 safe regex)
+app.get(/^(.*)$/, (req, res) => {
   res.sendFile(join(__dirname, 'dist', 'index.html'));
 });
 
