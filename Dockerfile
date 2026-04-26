@@ -1,26 +1,27 @@
-# Stage 1: Build the React Application
-FROM node:20-slim AS build
+# Build Stage
+FROM node:22-alpine AS builder
 
 WORKDIR /app
-COPY package.json package-lock.json* ./
-RUN npm install --legacy-peer-deps
+
+COPY package*.json ./
+RUN npm install
 
 COPY . .
+
 RUN npm run build
 
-# Stage 2: Serve the app with Express
-FROM node:20-slim
+# Production Stage
+FROM node:22-alpine
 
 WORKDIR /app
 
-# Only copy the built files, server file, and package.json
-COPY --from=build /app/dist ./dist
-COPY server.js .
-COPY package.json package-lock.json* ./
+COPY package*.json ./
+RUN npm install --production
 
-# Install only production dependencies (express, helmet, cors)
-RUN npm install --omit=dev --legacy-peer-deps
+# Copy only exactly what's needed to serve
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/server.js ./
 
-# Start the server
 EXPOSE 8080
-CMD ["node", "server.js"]
+
+CMD ["npm", "start"]

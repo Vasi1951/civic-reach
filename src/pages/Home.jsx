@@ -1,51 +1,36 @@
-import { lazy, Suspense } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Quiz from '../components/Quiz';
-
-const ElectionJourney = lazy(() => import('../components/ElectionJourney'));
+import { ShieldCheck, Users, Info } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
-  const navigate = useNavigate();
-
   return (
-    <div className="home-container">
-      <section className="hero-section" aria-labelledby="hero-title">
-        <div className="hero-content">
-          <h1 id="hero-title" className="hero-title">Participate. Empower. Vote.</h1>
-          <p className="hero-subtitle">
-            Understand the vital mechanics of the election process through our immersive, transparent, and interactive learning platform.
-          </p>
-          <button 
-            type="button" 
-            onClick={() => navigate('/journey')}
-            aria-label="Start your educational journey on how elections work"
-          >
-            Start Your Journey
-          </button>
-        </div>
-        <div className="canvas-container" aria-hidden="true">
-          <Suspense fallback={<div style={{color: 'white', textAlign: 'center', marginTop: '20%'}}>Loading 3D Experience...</div>}>
-            <ElectionJourney autoRotate />
-          </Suspense>
-        </div>
+    <div className="container fadeIn">
+      <section className="hero">
+        <h1>CivicReach</h1>
+        <p>Your interactive platform for Election Process Education. Discover how voting works, understand ballot structures, and test your knowledge interactively.</p>
+        <Link to="/journey" className="btn-primary" aria-label="Start Election Journey">
+          Start the Journey <ShieldCheck />
+        </Link>
       </section>
 
-      <section className="info-grid">
-        <article className="glass-panel">
-          <h2>Registration</h2>
-          <p>Learn the criteria, required documents, and deadlines for voter registration in your constituency.</p>
+      <section className="grid" aria-label="Features">
+        <article className="card glass-panel">
+          <Users size={32} color="#3b82f6" />
+          <h3>Voter Registration</h3>
+          <p>Learn the precise requirements and timelines necessary to legally register as a voter in your district.</p>
         </article>
-        <article className="glass-panel">
-          <h2>The Ballot</h2>
-          <p>Understand how polling stations operate, how EVMs or paper ballots work, and how your vote remains anonymous.</p>
+        
+        <article className="card glass-panel">
+          <ShieldCheck size={32} color="#10b981" />
+          <h3>The Ballot Box</h3>
+          <p>Understand the security and anonymity behind the voting booth and how ballots are managed.</p>
         </article>
-        <article className="glass-panel">
-          <h2>The Results</h2>
-          <p>Discover how votes are counted, the role of returning officers, and the declaration of election results.</p>
+        
+        <article className="card glass-panel">
+          <Info size={32} color="#8b5cf6" />
+          <h3>Counting Results</h3>
+          <p>Follow the life of a ballot after it's cast, detailing the transparent tabulation process.</p>
         </article>
       </section>
-
-      <Quiz />
     </div>
   );
 }
